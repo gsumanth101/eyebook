@@ -122,3 +122,35 @@ export const getDataFromBackend = async (endpoint: string): Promise<Record<strin
     throw new Error(`Unexpected response: ${text}`);
   }
 };
+
+export const logout = async () => {
+  try {
+    const response = await fetch('/api/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include', // Include cookies if using session-based authentication
+    });
+
+    const contentType = response.headers.get('Content-Type');
+    if (contentType && contentType.includes('application/json')) {
+      const responseData = await response.json();
+      if (response.ok) {
+        // Clear any client-side authentication data (e.g., tokens)
+        localStorage.removeItem('token');
+        // sessionStorage.removeItem('authToken');
+        // Redirect to the login page
+        window.location.href = '/';
+      } else {
+        throw new Error(responseData.message || 'Failed to log out');
+      }
+    } else {
+      const text = await response.text();
+      throw new Error(`Unexpected response: ${text}`);
+    }
+  } catch (error) {
+    console.error('Logout failed:', error);
+    throw error;
+  }
+};

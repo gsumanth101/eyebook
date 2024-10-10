@@ -136,9 +136,9 @@ const sitemap: MenuItem[] = [
   // },
   {
     id: 8,
-    name: 'Sign Out',
-    path: '#!',
-    pathName: 'sign-out',
+    name: 'Logout',
+    path: '/logout', // Update the path to /logout
+    pathName: 'logout',
     icon: 'humbleicons:logout',
     active: true,
   },
