@@ -1,76 +1,53 @@
-import { Box, Chip, Link, Paper, Stack, Typography } from '@mui/material';
-import { DataGrid, GridColDef, useGridApiRef } from '@mui/x-data-grid';
-import { rows } from 'data/product-performance';
-import { currencyFormat } from 'helpers/utils';
-import CustomPagination from 'components/common/CustomPagination';
-import SearchFilter from 'components/common/SearchFilter';
+import React, { useEffect, useState } from 'react';
+import { Box, Paper, Stack, Typography } from '@mui/material';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { getUniversityData } from 'api/api';
+// import CustomPagination from 'components/common/CustomPagination';
+// import SearchFilter from 'components/common/SearchFilter';
 
-const columns: GridColDef<(typeof rows)[number]>[] = [
-  {
-    field: 'assigned',
-    headerName: 'Assigned',
-    flex: 1.5,
-    minWidth: 200,
-    valueGetter: ({ name }: { name: string }) => name,
-    renderCell: (params) => {
-      return (
-        <Stack justifyContent="center" height={1}>
-          <Typography
-            variant="h6"
-            component={Link}
-            href="#!"
-            color="text.primary"
-            sx={{ width: 'max-content' }}
-          >
-            {params.row.assigned.name}
-          </Typography>
-          <Typography variant="subtitle2">{params.row.assigned.role}</Typography>
-        </Stack>
-      );
-    },
-  },
-  {
-    field: 'name',
-    headerName: 'Name',
-    flex: 1.5,
-    minWidth: 200,
-  },
-  {
-    field: 'priority',
-    headerName: 'Priority',
-    flex: 1,
-    minWidth: 150,
-    renderCell: (params) => {
-      let color: string = '';
-      switch (params.value) {
-        case 'Low':
-          color = 'success.lighter';
-          break;
-        case 'Medium':
-          color = 'info.lighter';
-          break;
-        case 'High':
-          color = 'error.lighter';
-          break;
-        case 'Critical':
-          color = 'warning.lighter';
-          break;
+interface UniversityData {
+  id: string;
+  long_name: string;
+  short_name: string;
+  location: string;
+  country: string;
+}
+
+const ProductPerformance: React.FC = () => {
+  const [universities, setUniversities] = useState<UniversityData[]>([]);
+
+  useEffect(() => {
+    const fetchUniversities = async () => {
+      try {
+        const response = await getUniversityData();
+        console.log('Fetched data:', response); // Debugging log
+        if (response && Array.isArray(response)) {
+          setUniversities(response);
+        } else {
+          console.error('Unexpected response format:', response);
+        }
+      } catch (error) {
+        console.error('Error fetching universities:', error);
       }
-      return <Chip label={params.value} sx={{ bgcolor: color }} />;
-    },
-  },
-  {
-    field: 'budget',
-    headerName: 'Budget',
-    flex: 0.5,
-    minWidth: 150,
-    valueGetter: (value) => value,
-    valueFormatter: (value: number) => `${currencyFormat(value / 1000)}k`,
-  },
-];
+    };
 
-const ProductPerformance = () => {
-  const apiRef = useGridApiRef();
+    fetchUniversities();
+  }, []);
+
+  const columns: GridColDef[] = [
+    { field: 'long_name', headerName: 'Long Name', flex: 1.5, minWidth: 200 },
+    { field: 'short_name', headerName: 'Short Name', flex: 1.5, minWidth: 200 },
+    { field: 'location', headerName: 'Location', flex: 1, minWidth: 150 },
+    { field: 'country', headerName: 'Country', flex: 1, minWidth: 150 },
+  ];
+
+  const rows = universities.map((university) => ({
+    id: university.id,
+    long_name: university.long_name,
+    short_name: university.short_name,
+    location: university.location,
+    country: university.country,
+  }));
 
   return (
     <Paper sx={{ p: 3 }}>
@@ -81,10 +58,10 @@ const ProductPerformance = () => {
         alignItems={{ md: 'center' }}
       >
         <Typography variant="h4" color="primary.dark">
-          Product Performance
+          University Data
         </Typography>
 
-        <SearchFilter apiRef={apiRef} sx={{ maxWidth: 350 }} />
+        {/* <SearchFilter sx={{ maxWidth: 350 }} apiRef={getUniversityData} /> */}
       </Stack>
 
       <Box
@@ -95,19 +72,14 @@ const ProductPerformance = () => {
         }}
       >
         <DataGrid
-          apiRef={apiRef}
-          columns={columns}
           rows={rows}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 5,
-              },
-            },
-          }}
+          columns={columns}
+          pageSizeOptions={[5, 10]}
+          checkboxSelection
+          sx={{ border: 0 }}
         />
       </Box>
-      <CustomPagination apiRef={apiRef} />
+      {/* <CustomPagination apiRef={getUniversityData} /> */}
     </Paper>
   );
 };

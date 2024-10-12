@@ -1,3 +1,14 @@
+import axios from 'axios';
+
+// Define or import the ProductPerformanceData type
+interface UniversityData {
+  id: string;
+  long_name: string;
+  short_name: string;
+  location: string;
+  country: string;
+}
+
 const API_BASE_URL = 'http://localhost:4000/api';
 
 interface LoginResponse {
@@ -17,6 +28,32 @@ interface ProfileResponse {
 
 export const adminLogin = async (loginRequest: LoginRequest): Promise<LoginResponse> => {
   const response = await fetch(`${API_BASE_URL}/admin/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(loginRequest),
+  });
+
+  // Log the response for debugging
+  console.log('Response:', response);
+
+  const contentType = response.headers.get('Content-Type');
+  if (contentType && contentType.includes('application/json')) {
+    const data = await response.json();
+    if (response.ok) {
+      return data;
+    } else {
+      throw new Error(data.message || 'Login failed');
+    }
+  } else {
+    const text = await response.text();
+    throw new Error(`Unexpected response: ${text}`);
+  }
+};
+
+export const spocLogin = async (loginRequest: LoginRequest): Promise<LoginResponse> => {
+  const response = await fetch(`${API_BASE_URL}/spoc/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -153,4 +190,29 @@ export const logout = async () => {
     console.error('Logout failed:', error);
     throw error;
   }
+};
+
+export const getUniversityCount = async (): Promise<number> => {
+  const response = await axios.get(`${API_BASE_URL}/admin/university_count`);
+  return response.data.count;
+};
+
+export const getStudentCount = async (): Promise<number> => {
+  const response = await axios.get(`${API_BASE_URL}/admin/student_count`);
+  return response.data.count;
+};
+
+export const getSpocCount = async (): Promise<number> => {
+  const response = await axios.get(`${API_BASE_URL}/admin/spoc_count`);
+  return response.data.count;
+};
+
+export const getCourseCount = async (): Promise<number> => {
+  const response = await axios.get(`${API_BASE_URL}/admin/course_count`);
+  return response.data.count;
+};
+
+export const getUniversityData = async (): Promise<UniversityData[]> => {
+  const response = await axios.get(`${API_BASE_URL}/admin/org`);
+  return response.data;
 };

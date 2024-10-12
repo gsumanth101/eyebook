@@ -20,8 +20,10 @@ import Profile from 'pages/admin/Profile';
 import AddUniversity from 'pages/admin/AddUniversity';
 import ManageUniversity from 'pages/admin/ManageUniversity';
 import BulkUpload from 'pages/admin/BulkUpload';
+import IndexPage from 'pages/IndexPage';
 import { useAuth } from 'providers/AuthProvider';
 import { useNavigate } from 'react-router-dom';
+import SpocSignIn from 'pages/spoc/SignIn';
 
 const Logout = () => {
   const { logout } = useAuth();
@@ -40,7 +42,23 @@ export const routes = [
     path: rootPaths.root,
     element: (
       <Suspense fallback={<Progress />}>
+        <IndexPage/>
+      </Suspense>
+    ),
+  },
+  {
+    path: '/login',
+    element: (
+      <Suspense fallback={<Progress />}>
         <SignIn />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/spoc/login',
+    element: (
+      <Suspense fallback={<Progress />}>
+        <SpocSignIn />
       </Suspense>
     ),
   },

@@ -48,7 +48,6 @@ const MainLayout = ({ children }: PropsWithChildren) => {
           minHeight: '100vh',
           width: { xs: 1, sm: `calc(100% - ${drawerWidth}px)` },
           bgcolor: 'neutral.lighter',
-          mt: 0,
         })}
       >
         <Toolbar />

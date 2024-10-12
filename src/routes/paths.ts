@@ -27,10 +27,11 @@ export const studentPaths = {
 };
 
 export default {
+  indexPage: rootPaths.root,
   // _________________Admin Routes____________________________
   add_university: `${rootPaths.authRoot}/add_university`,
   manage_university: `${rootPaths.authRoot}/manage_university`,
-  signin: rootPaths.root,
+  signin: `${rootPaths.authRoot}/signin`,
   signup: `${rootPaths.authRoot}/signup`,
   dashboard: rootPaths.dashboard,
   profile: `${rootPaths.authRoot}/profile`,

@@ -2,8 +2,13 @@ import { Card, CardContent, Stack, Typography } from '@mui/material';
 import IconifyIcon from 'components/base/IconifyIcon';
 import { SaleItem } from 'data/sales';
 
-const SaleCard = ({ item }: { item: SaleItem }) => {
-  const { value, label, growth, bgColor, iconBackgroundColor, icon, svgIcon: SvgIcon } = item;
+interface SaleCardProps {
+  item: SaleItem;
+  value: string;
+}
+
+const SaleCard = ({ item, value }: SaleCardProps) => {
+  const { label, growth, bgColor, iconBackgroundColor, icon, svgIcon: SvgIcon } = item;
 
   const Icon = icon ? (
     <IconifyIcon icon={icon} sx={{ fontSize: 20, color: 'common.white' }} />

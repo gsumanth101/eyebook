@@ -1,9 +1,8 @@
-import { AppBar, IconButton, Link, Stack, Toolbar } from '@mui/material';
-import { rootPaths } from 'routes/paths';
-import Logo from 'components/icons/Logo';
+import { AppBar, IconButton, Stack, Toolbar } from '@mui/material';
 import IconifyIcon from 'components/base/IconifyIcon';
+// import Search from 'components/common/Search';
 import ElevationScroll from './ElevationScroll';
-import AccountDropdown from './AccountDropdown';
+// import AccountDropdown from './AccountDropdown';
 
 interface TopbarProps {
   drawerWidth: number;
@@ -17,15 +16,15 @@ const Topbar = ({ drawerWidth, onHandleDrawerToggle }: TopbarProps) => {
         position="fixed"
         sx={{
           width: { lg: `calc(100% - ${drawerWidth}px)` },
-          ml: { lg: `${drawerWidth}px` },
-          height: '70px', // Decrease the height of the topbar
+          ml: { sm: `${drawerWidth}px` },
+          height: '50px', // Adjust the height here
         }}
       >
         <Toolbar
           sx={{
             justifyContent: 'space-between',
             gap: { xs: 1, sm: 5 },
-            minHeight: '60px', // Decrease the height of the toolbar
+            minHeight: '50px', // Adjust the height here
           }}
         >
           <Stack
@@ -34,12 +33,6 @@ const Topbar = ({ drawerWidth, onHandleDrawerToggle }: TopbarProps) => {
             columnGap={{ xs: 1, sm: 2 }}
             sx={{ display: { lg: 'none' } }}
           >
-            <Link href={rootPaths.root}>
-              <IconButton color="inherit" aria-label="logo">
-                <Logo sx={{ fontSize: 30 }} />
-              </IconButton>
-            </Link>
-
             <IconButton color="inherit" aria-label="open drawer" onClick={onHandleDrawerToggle}>
               <IconifyIcon icon="mdi:hamburger-menu" sx={{ fontSize: { xs: 24, sm: 32 } }} />
             </IconButton>
@@ -59,7 +52,14 @@ const Topbar = ({ drawerWidth, onHandleDrawerToggle }: TopbarProps) => {
             spacing={{ xs: 1, sm: 2, xl: 5.25 }}
             width={1}
           >
-            <AccountDropdown />
+            {/* <Search
+              sx={{
+                display: { xs: 'none', md: 'block' },
+                minWidth: 300,
+                maxWidth: 550,
+              }}
+            />
+            <AccountDropdown /> */}
           </Stack>
         </Toolbar>
       </AppBar>
