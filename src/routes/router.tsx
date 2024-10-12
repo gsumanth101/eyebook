@@ -19,6 +19,9 @@ import Progress from 'components/loading/Progress';
 import Profile from 'pages/admin/Profile';
 import AddUniversity from 'pages/admin/AddUniversity';
 import ManageUniversity from 'pages/admin/ManageUniversity';
+import AddCourse from 'pages/admin/AddCourse';
+import ManageCourse from 'pages/admin/ManageCourse';
+import CourseDetails from '../pages/admin/CourseDetails';
 import BulkUpload from 'pages/admin/BulkUpload';
 import { useAuth } from 'providers/AuthProvider';
 import { useNavigate } from 'react-router-dom';
@@ -80,6 +83,26 @@ export const routes = [
           {
             path: paths.manage_university,
             element: <ManageUniversity />,
+          },
+          {
+            path: paths.add_course,
+            element: <AddCourse />,
+          },
+          {
+            path: paths.manage_course,
+            element: (
+              <Suspense fallback={<Progress />}>
+                <ManageCourse />
+              </Suspense>
+            ),
+          },
+          {
+            path: paths.course_details(':courseId'),
+            element: (
+              <Suspense fallback={<Progress />}>
+                <CourseDetails />
+              </Suspense>
+            ),
           },
           {
             path: paths.upload_students,
