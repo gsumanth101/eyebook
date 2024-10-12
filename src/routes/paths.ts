@@ -30,6 +30,9 @@ export default {
   // _________________Admin Routes____________________________
   add_university: `${rootPaths.authRoot}/add_university`,
   manage_university: `${rootPaths.authRoot}/manage_university`,
+  add_course: `${rootPaths.authRoot}/add_course`,
+  manage_course: `${rootPaths.authRoot}/manage_course`,
+  course_details: (courseId: string) => `${rootPaths.authRoot}/courses/${courseId}`,
   signin: rootPaths.root,
   signup: `${rootPaths.authRoot}/signup`,
   dashboard: rootPaths.dashboard,
