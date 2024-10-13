@@ -1,9 +1,9 @@
 import { AppBar, IconButton, Link, Stack, Toolbar } from '@mui/material';
 import { rootPaths } from 'routes/paths';
-import Logo from 'components/icons/Logo';
+// import Logo from 'components/icons/Logo';
 import IconifyIcon from 'components/base/IconifyIcon';
 import ElevationScroll from './ElevationScroll';
-import AccountDropdown from './AccountDropdown';
+// import AccountDropdown from './AccountDropdown';
 
 interface TopbarProps {
   drawerWidth: number;
@@ -35,9 +35,9 @@ const Topbar = ({ drawerWidth, onHandleDrawerToggle }: TopbarProps) => {
             sx={{ display: { lg: 'none' } }}
           >
             <Link href={rootPaths.root}>
-              <IconButton color="inherit" aria-label="logo">
+              {/* <IconButton color="inherit" aria-label="logo">
                 <Logo sx={{ fontSize: 30 }} />
-              </IconButton>
+              </IconButton> */}
             </Link>
 
             <IconButton color="inherit" aria-label="open drawer" onClick={onHandleDrawerToggle}>
@@ -59,7 +59,7 @@ const Topbar = ({ drawerWidth, onHandleDrawerToggle }: TopbarProps) => {
             spacing={{ xs: 1, sm: 2, xl: 5.25 }}
             width={1}
           >
-            <AccountDropdown />
+            {/* <AccountDropdown /> */}
           </Stack>
         </Toolbar>
       </AppBar>

@@ -1,7 +1,7 @@
 import { Link, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { MenuItem } from 'routes/sitemap';
+import { MenuItem } from 'routes/spocSitemap';
 import IconifyIcon from 'components/base/IconifyIcon';
 import CollapsedItems from './CollapsedItems';
 

@@ -31,6 +31,9 @@ export default {
   // _________________Admin Routes____________________________
   add_university: `${rootPaths.authRoot}/add_university`,
   manage_university: `${rootPaths.authRoot}/manage_university`,
+  add_course: `${rootPaths.authRoot}/add_course`,
+  manage_course: `${rootPaths.authRoot}/manage_course`,
+  course_details: (courseId: string) => `${rootPaths.authRoot}/courses/${courseId}`,
   signin: `${rootPaths.authRoot}/signin`,
   signup: `${rootPaths.authRoot}/signup`,
   dashboard: rootPaths.dashboard,
@@ -44,7 +47,7 @@ export default {
   spoc_signup: `${spocPaths.authRoot}/signup`,
   spoc_dashboard: spocPaths.dashboard,
   spoc_profile: `${spocPaths.authRoot}/profile`,
-  spoc_upload_students: `${spocPaths.authRoot}/upload_students`,
+  spoc_upload_faculty: `${spocPaths.authRoot}/upload_faculties`,
 
   //______________________Faculty Routes______________________________
   faculty_add_university: `${facultyPaths.authRoot}/add_university`,

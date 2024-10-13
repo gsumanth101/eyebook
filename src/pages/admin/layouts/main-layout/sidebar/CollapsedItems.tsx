@@ -1,6 +1,6 @@
 import { Collapse, Link, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { useLocation } from 'react-router-dom';
-import { MenuItem } from 'routes/sitemap';
+import { MenuItem } from 'routes/adminSitemap';
 
 interface CollapsedItemProps {
   items: MenuItem[];

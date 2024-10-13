@@ -9,10 +9,10 @@ function IndexPage() {
           <div className="logo">EyeBook</div>
           <ul className="nav-links">
             <li>
-              <a href="http://localhost:5000/student">Student</a>
+              <a href="http://localhost:5173/student/login">Student</a>
             </li>
             <li>
-              <a href="http://localhost:5000/">Faculty</a>
+              <a href="http://localhost:5173/faculty/login">Faculty</a>
             </li>
             <li>
               <a href="/spoc">Spoc</a>

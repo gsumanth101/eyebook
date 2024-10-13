@@ -1,5 +1,5 @@
 import { Box, List, Stack, Toolbar } from '@mui/material';
-import sitemap from '../../../../../routes/sitemap';
+import sitemap from 'routes/adminSitemap';
 import LogoHeader from './LogoHeader';
 import NavCard from './NavCard';
 import NavItem from './NavItem';

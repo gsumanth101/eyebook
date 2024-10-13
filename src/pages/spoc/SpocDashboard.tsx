@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import Sales from 'components/sections/dashboard/todays-sales/Sales';
+
 // import VisitorInsights from 'components/sections/dashboard/visitor-insights/VisitorInsights';
 // import TotalRevenue from 'components/sections/dashboard/total-revenue/TotalRevenue';
 // import CustomerSatisfaction from 'components/sections/dashboard/customer-satisfaction/CustomerSatisfaction';
@@ -8,12 +8,13 @@ import Sales from 'components/sections/dashboard/todays-sales/Sales';
 // import SalesMapping from 'components/sections/dashboard/sales-mapping/SalesMapping';
 // import VolumeVsService from 'components/sections/dashboard/volume-vs-service/VolumeVsService';
 import ProductPerformance from 'components/sections/dashboard/product-performance/ProductPerformance';
+import SpocSales from './components/Sales';
 
 const SpocDashboard = () => {
   return (
     <Grid container spacing={4}>
       <Grid item xs={12} xl={7}>
-        <Sales />
+        <SpocSales />
       </Grid>
       {/* <Grid item xs={12} md={7} xl={5}>
         <VisitorInsights />

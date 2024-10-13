@@ -3,10 +3,10 @@ import { Typography, Grid, Paper, Stack, Button, Menu, MenuItem } from '@mui/mat
 import IconifyIcon from 'components/base/IconifyIcon';
 import { sales } from 'data/sales';
 import SaleCard from './SaleCard';
-import { getUniversityCount, getStudentCount, getSpocCount, getCourseCount } from 'api/api';
+import { getUniversityData, getStudentCount, getSpocCount, getCourseCount } from 'api/api';
 import axios from 'axios'; // Import axios for making HTTP requests
 
-const Sales = () => {
+const SpocSales = () => {
   const [universityCount, setUniversityCount] = useState<string>('0');
   const [studentCount, setStudentCount] = useState<string>('0');
   const [spocCount, setSpocCount] = useState<string>('0');
@@ -17,7 +17,7 @@ const Sales = () => {
     const fetchCounts = async () => {
       try {
         const [universityCount, studentCount, spocCount, courseCount] = await Promise.all([
-          getUniversityCount(),
+          getUniversityData(),
           getStudentCount(),
           getSpocCount(),
           getCourseCount(),
@@ -130,4 +130,4 @@ const Sales = () => {
   );
 };
 
-export default Sales;
+export default SpocSales;
