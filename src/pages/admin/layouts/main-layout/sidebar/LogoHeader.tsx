@@ -5,19 +5,18 @@ import { rootPaths } from 'routes/paths';
 interface LogoHeaderProps {
   sx?: SxProps;
 }
-
 const LogoHeader = (props: LogoHeaderProps) => {
   return (
     <Stack
       direction="row"
       alignItems="center"
-      columnGap={2} // Adjust the gap between logo and text
+      columnGap={3}
       component={Link}
       href={rootPaths.root}
       {...props}
     >
-      <Logo sx={{ fontSize: 50 }} /> {/* Reduce the logo size */}
-      <Typography variant="h6" color="primary.darker">
+      <Logo sx={{ fontSize: 30 }} />
+      <Typography variant="h2" color="primary.darker">
         EyeBook
       </Typography>
     </Stack>

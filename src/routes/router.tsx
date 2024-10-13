@@ -23,8 +23,12 @@ import AddCourse from 'pages/admin/AddCourse';
 import ManageCourse from 'pages/admin/ManageCourse';
 import CourseDetails from '../pages/admin/CourseDetails';
 import BulkUpload from 'pages/admin/BulkUpload';
+import IndexPage from 'pages/IndexPage';
 import { useAuth } from 'providers/AuthProvider';
 import { useNavigate } from 'react-router-dom';
+import SpocSignIn from 'pages/spoc/SignIn';
+import SpocProfile from 'pages/spoc/Profile';
+import FacultyBulkUpload from 'pages/spoc/FacultyUpload';
 
 const Logout = () => {
   const { logout } = useAuth();
@@ -43,7 +47,23 @@ export const routes = [
     path: rootPaths.root,
     element: (
       <Suspense fallback={<Progress />}>
+        <IndexPage/>
+      </Suspense>
+    ),
+  },
+  {
+    path: '/login',
+    element: (
+      <Suspense fallback={<Progress />}>
         <SignIn />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/spoc/login',
+    element: (
+      <Suspense fallback={<Progress />}>
+        <SpocSignIn />
       </Suspense>
     ),
   },
@@ -118,7 +138,7 @@ export const routes = [
         path: '/spoc',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <SignIn />
+            <SpocSignIn />
           </Suspense>
         ),
       },
@@ -167,7 +187,17 @@ export const routes = [
         element: (
           <SpocLayout>
             <Suspense fallback={<PageLoader />}>
-              <Profile />
+              <SpocProfile />
+            </Suspense>
+          </SpocLayout>
+        ),
+      },
+      {
+        path: '/spoc/upload_faculties',
+        element: (
+          <SpocLayout>
+            <Suspense fallback={<PageLoader />}>
+              <FacultyBulkUpload />
             </Suspense>
           </SpocLayout>
         ),

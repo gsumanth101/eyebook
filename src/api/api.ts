@@ -1,3 +1,14 @@
+import axios from 'axios';
+
+// Define or import the ProductPerformanceData type
+interface UniversityData {
+  id: string;
+  long_name: string;
+  short_name: string;
+  location: string;
+  country: string;
+}
+
 const API_BASE_URL = 'http://localhost:4000/api';
 
 interface LoginResponse {
@@ -16,54 +27,60 @@ interface ProfileResponse {
 }
 
 export const adminLogin = async (loginRequest: LoginRequest): Promise<LoginResponse> => {
-  const response = await fetch(`${API_BASE_URL}/admin/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(loginRequest),
-  });
+  try {
+    const response = await axios.post(`${API_BASE_URL}/admin/login`, loginRequest, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Login failed:', error);
+    throw new Error(error.response?.data?.message || 'Login failed');
+  }
+};
 
-  // Log the response for debugging
-  console.log('Response:', response);
-
-  const contentType = response.headers.get('Content-Type');
-  if (contentType && contentType.includes('application/json')) {
-    const data = await response.json();
-    if (response.ok) {
-      return data;
-    } else {
-      throw new Error(data.message || 'Login failed');
-    }
-  } else {
-    const text = await response.text();
-    throw new Error(`Unexpected response: ${text}`);
+export const spocLogin = async (loginRequest: LoginRequest): Promise<LoginResponse> => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/spoc/login`, loginRequest, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Login failed:', error);
+    throw new Error(error.response?.data?.message || 'Login failed');
   }
 };
 
 export const getProfile = async (): Promise<ProfileResponse> => {
-  const response = await fetch(`${API_BASE_URL}/admin/profile`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-      'Content-Type': 'application/json',
-    },
-  });
+  try {
+    const response = await axios.get(`${API_BASE_URL}/admin/profile`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch profile:', error);
+    throw new Error(error.response?.data?.message || 'Failed to fetch profile');
+  }
+};
 
-  // Log the response for debugging
-  console.log('Response:', response);
-
-  const contentType = response.headers.get('Content-Type');
-  if (contentType && contentType.includes('application/json')) {
-    const data = await response.json();
-    if (response.ok) {
-      return data;
-    } else {
-      throw new Error(data.message || 'Failed to fetch profile');
-    }
-  } else {
-    const text = await response.text();
-    throw new Error(`Unexpected response: ${text}`);
+export const getSpocProfile = async (): Promise<ProfileResponse> => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/spoc/profile`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch profile:', error);
+    throw new Error(error.response?.data?.message || 'Failed to fetch profile');
   }
 };
 
@@ -71,29 +88,49 @@ export const postDataToBackend = async (
   endpoint: string,
   data: Record<string, unknown>,
 ): Promise<Record<string, unknown>> => {
-  const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
+  try {
+    const response = await axios.post(`${API_BASE_URL}/${endpoint}`, data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Failed to post data:', error);
+    throw new Error(error.response?.data?.message || 'Failed to post data');
+  }
+};
 
-  // Log the response for debugging
-  console.log('Response:', response);
+export const getUnitData = async (courseId: string, unitId: string): Promise<Blob> => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/admin/courses/${courseId}/units/${unitId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      responseType: 'blob',
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch unit data:', error);
+    throw new Error('Failed to fetch unit data');
+  }
+};
 
-  const contentType = response.headers.get('Content-Type');
-  if (contentType && contentType.includes('application/json')) {
-    const responseData = await response.json();
-    if (response.ok) {
-      return responseData;
-    } else {
-      throw new Error(responseData.message || 'Failed to post data');
-    }
-  } else {
-    const text = await response.text();
-    throw new Error(`Unexpected response: ${text}`);
+export const postFormDataToBackend = async (
+  endpoint: string,
+  formData: FormData,
+): Promise<Record<string, unknown>> => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/${endpoint}`, formData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Failed to post form data:', error);
+    throw new Error(error.response?.data?.message || 'Failed to post form data');
   }
 };
 
@@ -142,59 +179,91 @@ export const postFormDataToBackend = async (
 };
 
 export const getDataFromBackend = async (endpoint: string): Promise<Record<string, unknown>> => {
-  const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-      'Content-Type': 'application/json',
-    },
-  });
-
-  // Log the response for debugging
-  console.log('Response:', response);
-
-  const contentType = response.headers.get('Content-Type');
-  if (contentType && contentType.includes('application/json')) {
-    const responseData = await response.json();
-    if (response.ok) {
-      return responseData;
-    } else {
-      throw new Error(responseData.message || 'Failed to fetch data');
-    }
-  } else {
-    const text = await response.text();
-    throw new Error(`Unexpected response: ${text}`);
+  try {
+    const response = await axios.get(`${API_BASE_URL}/${endpoint}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch data:', error);
+    throw new Error(error.response?.data?.message || 'Failed to fetch data');
   }
 };
 
-export const logout = async () => {
+export const logout = async (): Promise<void> => {
   try {
-    const response = await fetch('/api/logout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await axios.post(
+      '/api/logout',
+      {},
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true, // Include cookies if using session-based authentication
       },
-      credentials: 'include', // Include cookies if using session-based authentication
-    });
+    );
 
-    const contentType = response.headers.get('Content-Type');
-    if (contentType && contentType.includes('application/json')) {
-      const responseData = await response.json();
-      if (response.ok) {
-        // Clear any client-side authentication data (e.g., tokens)
-        localStorage.removeItem('token');
-        // sessionStorage.removeItem('authToken');
-        // Redirect to the login page
-        window.location.href = '/';
-      } else {
-        throw new Error(responseData.message || 'Failed to log out');
-      }
+    if (response.status === 200) {
+      localStorage.removeItem('token');
+      window.location.href = '/';
     } else {
-      const text = await response.text();
-      throw new Error(`Unexpected response: ${text}`);
+      throw new Error(response.data.message || 'Failed to log out');
     }
   } catch (error) {
     console.error('Logout failed:', error);
     throw error;
+  }
+};
+
+export const getUniversityCount = async (): Promise<number> => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/admin/university_count`);
+    return response.data.count;
+  } catch (error) {
+    console.error('Failed to fetch university count:', error);
+    throw new Error('Failed to fetch university count');
+  }
+};
+
+export const getStudentCount = async (): Promise<number> => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/admin/student_count`);
+    return response.data.count;
+  } catch (error) {
+    console.error('Failed to fetch student count:', error);
+    throw new Error('Failed to fetch student count');
+  }
+};
+
+export const getSpocCount = async (): Promise<number> => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/admin/spoc_count`);
+    return response.data.count;
+  } catch (error) {
+    console.error('Failed to fetch SPOC count:', error);
+    throw new Error('Failed to fetch SPOC count');
+  }
+};
+
+export const getCourseCount = async (): Promise<number> => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/admin/course_count`);
+    return response.data.count;
+  } catch (error) {
+    console.error('Failed to fetch course count:', error);
+    throw new Error('Failed to fetch course count');
+  }
+};
+
+export const getUniversityData = async (): Promise<UniversityData[]> => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/spoc/student_count`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch university data:', error);
+    throw new Error('Failed to fetch university data');
   }
 };

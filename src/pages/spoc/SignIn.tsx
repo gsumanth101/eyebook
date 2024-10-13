@@ -1,9 +1,9 @@
 import React, { useState, SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { adminLogin } from '../../api/api'; // Adjust the import path as needed
+import { spocLogin } from '../../api/api'; // Adjust the import path as needed
 import './SignIn.css'; // Import the CSS file
 
-const SignIn: React.FC = () => {
+const SpocSignIn: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,9 +12,9 @@ const SignIn: React.FC = () => {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     try {
-      const data = await adminLogin({ email, password });
+      const data = await spocLogin({ email, password });
       localStorage.setItem('token', data.token);
-      navigate('/dashboard');
+      navigate('/spoc/dashboard');
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message || 'Login failed');
@@ -95,4 +95,4 @@ const SignIn: React.FC = () => {
   );
 };
 
-export default SignIn;
+export default SpocSignIn;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getProfile } from '../../api/api';
+import { getSpocProfile } from '../../api/api';
 // import { updatePassword } from '../../api/api';
 import { Box, Grid, Typography, TextField, Button, Avatar, Paper, Alert } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -24,7 +24,7 @@ const theme = createTheme({
   },
 });
 
-const Profile: React.FC = () => {
+const SpocProfile: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -38,7 +38,7 @@ const Profile: React.FC = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const data = await getProfile();
+        const data = await getSpocProfile();
         setUser(data);
       } catch (err) {
         setError(err.message);
@@ -188,4 +188,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+export default SpocProfile;

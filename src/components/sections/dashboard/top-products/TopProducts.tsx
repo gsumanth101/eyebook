@@ -24,8 +24,8 @@ const TopProducts = () => {
             <TableRow>
               <TableCell>#</TableCell>
               <TableCell>Name</TableCell>
-              <TableCell>Popularity</TableCell>
-              <TableCell>Sales</TableCell>
+              <TableCell>University</TableCell>
+              <TableCell>Student</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
