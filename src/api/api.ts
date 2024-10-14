@@ -134,49 +134,49 @@ export const postFormDataToBackend = async (
   }
 };
 
-export const getUnitData = async (courseId: string, unitId: string): Promise<Blob> => {
-  const response = await fetch(`${API_BASE_URL}/admin/courses/${courseId}/units/${unitId}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
+// export const getUnitData = async (courseId: string, unitId: string): Promise<Blob> => {
+//   const response = await fetch(`${API_BASE_URL}/admin/courses/${courseId}/units/${unitId}`, {
+//     method: 'GET',
+//     headers: {
+//       Authorization: `Bearer ${localStorage.getItem('token')}`,
+//     },
+//   });
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch unit data');
-  }
+//   if (!response.ok) {
+//     throw new Error('Failed to fetch unit data');
+//   }
 
-  return await response.blob();
-};
+//   return await response.blob();
+// };
 
-export const postFormDataToBackend = async (
-  endpoint: string,
-  formData: FormData,
-): Promise<Record<string, unknown>> => {
-  const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-    body: formData,
-  });
+// export const postFormDataToBackend = async (
+//   endpoint: string,
+//   formData: FormData,
+// ): Promise<Record<string, unknown>> => {
+//   const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+//     method: 'POST',
+//     headers: {
+//       Authorization: `Bearer ${localStorage.getItem('token')}`,
+//     },
+//     body: formData,
+//   });
 
-  // Log the response for debugging
-  console.log('Response:', response);
+//   // Log the response for debugging
+//   console.log('Response:', response);
 
-  const contentType = response.headers.get('Content-Type');
-  if (contentType && contentType.includes('application/json')) {
-    const responseData = await response.json();
-    if (response.ok) {
-      return responseData;
-    } else {
-      throw new Error(responseData.message || 'Failed to post data');
-    }
-  } else {
-    const text = await response.text();
-    throw new Error(`Unexpected response: ${text}`);
-  }
-};
+//   const contentType = response.headers.get('Content-Type');
+//   if (contentType && contentType.includes('application/json')) {
+//     const responseData = await response.json();
+//     if (response.ok) {
+//       return responseData;
+//     } else {
+//       throw new Error(responseData.message || 'Failed to post data');
+//     }
+//   } else {
+//     const text = await response.text();
+//     throw new Error(`Unexpected response: ${text}`);
+//   }
+// };
 
 export const getDataFromBackend = async (endpoint: string): Promise<Record<string, unknown>> => {
   try {
